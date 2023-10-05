@@ -1,6 +1,7 @@
 package com.maurotellodev.tareascampo.ui.login.ui.login
 
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -31,6 +32,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.maurotellodev.tareascampo.R
 import kotlinx.coroutines.launch
 
@@ -69,10 +71,14 @@ fun Login(modifier: Modifier, viewModel: LoginViewModel) {
             ForgotPassword(Modifier.align(Alignment.End))
             Spacer(modifier = Modifier.padding(16.dp))
             LoginButton(loginEnable) {
-                coroutineScope.launch {
-                    viewModel.onLoginSelected()
-                }
+
+                    coroutineScope.launch {
+                        viewModel.onLoginSelected()
+                    }
+
             }
+            /*
+            */
         }
     }
 }

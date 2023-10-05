@@ -38,4 +38,8 @@ class LoginViewModel : ViewModel() {
         _isLoading.value = false
     }
 
+    private fun login(){
+
+    }
+
 }

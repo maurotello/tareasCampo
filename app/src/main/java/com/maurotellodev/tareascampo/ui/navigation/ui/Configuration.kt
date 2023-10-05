@@ -1,4 +1,4 @@
-package com.maurotellodev.tareascampo.ui.navigation
+package com.maurotellodev.tareascampo.ui.navigation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
