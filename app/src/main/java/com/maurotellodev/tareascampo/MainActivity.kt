@@ -3,6 +3,7 @@ package com.maurotellodev.tareascampo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,8 +15,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,20 +22,23 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.maurotellodev.tareascampo.ui.login.ui.login.LoginScreen
-import com.maurotellodev.tareascampo.ui.login.ui.login.LoginViewModel
+import com.maurotellodev.tareascampo.login.ui.LoginScreen
+import com.maurotellodev.tareascampo.login.ui.LoginViewModel
+
 import com.maurotellodev.tareascampo.ui.theme.TareasCampoTheme
 
-import com.maurotellodev.tareascampo.ui.navigation.Items_bottom_menu.*
-import com.maurotellodev.tareascampo.ui.navigation.MyAppNavigationActions
-import com.maurotellodev.tareascampo.ui.navigation.MyAppRoute
-import com.maurotellodev.tareascampo.ui.navigation.MyAppTopLevelDestination
-import com.maurotellodev.tareascampo.ui.navigation.TOP_LEVEL_DESTINATIONS
+import com.maurotellodev.tareascampo.navigation.Items_bottom_menu.*
+import com.maurotellodev.tareascampo.navigation.MyAppRoute
+import com.maurotellodev.tareascampo.navigation.MyAppTopLevelDestination
+import com.maurotellodev.tareascampo.navigation.TOP_LEVEL_DESTINATIONS
+import dagger.hilt.android.AndroidEntryPoint
 
-
+// Con esta anotación preparo la Activity para inyección de dependencias
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    // Lo que hacmos con la siguiente linea es inyectar el viewmodel
+    // Nos olvidamos de crear instancias a mano
+    private val loginViewModel:LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

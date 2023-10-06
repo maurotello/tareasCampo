@@ -1,4 +1,4 @@
-package com.maurotellodev.tareascampo.ui.navigation.ui
+package com.maurotellodev.tareascampo.navigation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.maurotellodev.tareascampo.R
 
 @Composable
-fun Configuration(){
+fun Options(){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -25,7 +25,7 @@ fun Configuration(){
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
-            text = "Configuración",
+            text = "Opciones",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally),

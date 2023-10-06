@@ -1,4 +1,4 @@
-package com.maurotellodev.tareascampo.ui.navigation
+package com.maurotellodev.tareascampo.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
