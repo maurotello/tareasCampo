@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.maurotellodev.tareascampo.R
 
 @Composable
@@ -43,25 +44,9 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
             .fillMaxSize()
             .padding(8.dp)
     ) {
-        val isLoading: Boolean by loginViewModel.isLoading.observeAsState(initial = false)
-        if (isLoading) {
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.Center)
-            ) {
-                // Esto lo hice yo pero no sé tiene que verse bien sin el BOX no se ve
-                Box(modifier = Modifier.fillMaxWidth(1f)){
-                    CircularProgressIndicator()
-                }
-            }
-
-        } else {
-            Header(Modifier.align(Alignment.TopEnd))
-            Body(Modifier.align(Alignment.Center), loginViewModel)
-            Footer(Modifier.align(Alignment.BottomCenter))
-        }
-
+        Header(Modifier.align(Alignment.TopEnd))
+        Body(Modifier.align(Alignment.Center), loginViewModel)
+        Footer(Modifier.align(Alignment.BottomCenter))
     }
 }
 
@@ -98,9 +83,9 @@ fun SignUp() {
 
 @Composable
 fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
-    val email: String by loginViewModel.email.observeAsState(initial = "")
-    val password: String by loginViewModel.password.observeAsState(initial = "")
-    val isLoginEnable: Boolean by loginViewModel.isLoginEnable.observeAsState(initial = false)
+    val email:String by loginViewModel.email.observeAsState(initial = "")
+    val password:String by loginViewModel.password.observeAsState(initial = "")
+    val isLoginEnable:Boolean by loginViewModel.isLoginEnable.observeAsState(initial = false)
 
     Column(modifier = modifier) {
         ImageLogo(Modifier.align(Alignment.CenterHorizontally))
@@ -178,7 +163,7 @@ fun LoginButton(loginEnable: Boolean, loginViewModel: LoginViewModel) {
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(0xFF4EA8E9),
-            disabledContainerColor = Color(0xFF78C8F9),
+             //disabledBackgroundColor = Color(0xFF78C8F9),
             contentColor = Color.White,
             disabledContentColor = Color.White
         )
@@ -246,7 +231,7 @@ fun Email(email: String, onTextChanged: (String) -> Unit) {
         maxLines = 1,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-        colors = TextFieldDefaults.textFieldColors(
+        colors =  TextFieldDefaults.textFieldColors(
             textColor = Color(0xFFB2B2B2),
             containerColor = Color(0xFFFAFAFA),
             focusedIndicatorColor = Color.Transparent,
@@ -267,7 +252,8 @@ fun ImageLogo(modifier: Modifier) {
 @Composable
 fun Header(modifier: Modifier) {
     val activity = LocalContext.current as Activity
-    Icon(imageVector = Icons.Default.Close,
+    Icon(
+        imageVector = Icons.Default.Close,
         contentDescription = "close app",
         modifier = modifier.clickable { activity.finish() })
 }
