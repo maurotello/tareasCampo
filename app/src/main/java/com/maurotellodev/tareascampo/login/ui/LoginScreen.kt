@@ -13,7 +13,6 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -35,17 +34,21 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.maurotellodev.tareascampo.R
+import com.maurotellodev.tareascampo.navigation.ui.BottomNavigationBar
 
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel) {
+fun LoginScreen(loginViewModel: LoginViewModel, navController: NavHostController) {
+    //val navController = rememberNavController()
     Box(
         Modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
         Header(Modifier.align(Alignment.TopEnd))
-        Body(Modifier.align(Alignment.Center), loginViewModel)
+        Body(Modifier.align(Alignment.Center), loginViewModel, navController)
         Footer(Modifier.align(Alignment.BottomCenter))
     }
 }
@@ -82,7 +85,7 @@ fun SignUp() {
 }
 
 @Composable
-fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
+fun Body(modifier: Modifier, loginViewModel: LoginViewModel, navController: NavController) {
     val email:String by loginViewModel.email.observeAsState(initial = "")
     val password:String by loginViewModel.password.observeAsState(initial = "")
     val isLoginEnable:Boolean by loginViewModel.isLoginEnable.observeAsState(initial = false)
@@ -100,7 +103,8 @@ fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
         Spacer(modifier = Modifier.size(8.dp))
         ForgotPassword(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.size(16.dp))
-        LoginButton(isLoginEnable, loginViewModel)
+        //LoginButton(isLoginEnable, loginViewModel)
+        LoginButton(isLoginEnable , loginViewModel, navController)
         Spacer(modifier = Modifier.size(16.dp))
         LoginDivider()
         Spacer(modifier = Modifier.size(32.dp))
@@ -156,9 +160,13 @@ fun LoginDivider() {
 }
 
 @Composable
-fun LoginButton(loginEnable: Boolean, loginViewModel: LoginViewModel) {
+fun LoginButton(loginEnable: Boolean, loginViewModel: LoginViewModel, navController: NavController) {
+    val loged = true;
     Button(
-        onClick = { loginViewModel.onLoginSelected() },
+        //onClick = { loginViewModel.onLoginSelected() },
+        onClick = {
+          navController.navigate("BottomNavigationBar")
+        },
         enabled = loginEnable,
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(

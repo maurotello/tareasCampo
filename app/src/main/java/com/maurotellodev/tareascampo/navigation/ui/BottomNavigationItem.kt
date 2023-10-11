@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavController
 
 //initializing the data class with default parameters
 data class BottomNavigationItem(
@@ -12,6 +13,7 @@ data class BottomNavigationItem(
     val icon : ImageVector = Icons.Filled.Home,
     val route : String = ""
 ) {
+
 
     //function to get the list of bottomNavigationItems
     fun bottomNavigationItems() : List<BottomNavigationItem> {

@@ -1,12 +1,17 @@
 package com.maurotellodev.tareascampo.login.ui
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.util.Patterns
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.compose.rememberNavController
+import com.maurotellodev.tareascampo.navigation.ui.BottomNavigationBar
 import kotlinx.coroutines.launch
+
 
 // Con esta anotación preparamos el viewModel para ser inyectado
 class LoginViewModel:ViewModel() {
@@ -21,7 +26,7 @@ class LoginViewModel:ViewModel() {
     val isLoginEnable:LiveData<Boolean> = _isLoginEnable
 
     private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading:LiveData<Boolean> = _isLoading
+    var isLoading:LiveData<Boolean> = _isLoading
 
     fun onLoginChanged(email:String, password:String){
         _email.value = email
@@ -31,6 +36,7 @@ class LoginViewModel:ViewModel() {
 
     fun enableLogin(email: String, password: String) =
         Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length > 6
+
 
     fun onLoginSelected(){
         viewModelScope.launch {
@@ -42,4 +48,6 @@ class LoginViewModel:ViewModel() {
             _isLoading.value = false
         }
     }
+
+
 }

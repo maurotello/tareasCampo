@@ -18,12 +18,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.maurotellodev.tareascampo.R
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
 @Composable
-fun OptionsScreen(navController: NavController) {
+fun OptionsScreen(navController: NavHostController) {
     Scaffold() {
         BodyContent()
     }
@@ -34,7 +35,7 @@ fun BodyContent(){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.teal_700))
+            .background(colorResource(id = R.color.teal_200))
             .wrapContentSize(Alignment.Center)
     ) {
         Text(

@@ -11,8 +11,7 @@ sealed class Destinations(
     val title: String,
     val icon: ImageVector
 ){
-    //object LoginScreen: Destinations("Login", "Login", Icons.Default.Home)
-    object Main: Destinations("Main", "Main", Icons.Filled.JoinFull)
+   // object BottomNavigationBar: Destinations("BottomNavigationBar", "BottomNavigationBar", Icons.Filled.JoinFull)
     object Jobs: Destinations("Trabajos", "Trabajos", Icons.Filled.JoinFull)
     object Options: Destinations("Opciones", "Opciones", Icons.Filled.Settings)
     object Settings: Destinations("Settings", "Configuración", Icons.Filled.Settings)

@@ -17,12 +17,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.maurotellodev.tareascampo.R
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun JobsScreen(navController: NavController) {
+fun JobsScreen(navController: NavHostController) {
     Scaffold() {
         JobsBodyContent()
     }
@@ -37,7 +38,7 @@ fun JobsBodyContent(){
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
-            text = "Opciones",
+            text = "Trabajos",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally),
