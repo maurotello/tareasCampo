@@ -166,9 +166,7 @@ fun LoginButton(loginEnable: Boolean, loginViewModel: LoginViewModel, navControl
     Button(
         //onClick = { loginViewModel.onLoginSelected() },
         onClick = {
-            navController.navigate(Destinations.Jobs.route){
-                launchSingleTop = true
-            }
+            navController.navigate(Destinations.Jobs.route)
         },
         enabled = loginEnable,
         modifier = Modifier.fillMaxWidth(),

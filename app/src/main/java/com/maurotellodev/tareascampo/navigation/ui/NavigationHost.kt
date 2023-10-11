@@ -6,6 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.maurotellodev.tareascampo.login.ui.LoginScreen
+import com.maurotellodev.tareascampo.login.ui.LoginViewModel
 import com.maurotellodev.tareascampo.navigation.ui.Destinations.*
 
 
@@ -13,11 +15,11 @@ import com.maurotellodev.tareascampo.navigation.ui.Destinations.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
-fun NavigationHost( navController: NavController){
+fun NavigationHost( navController: NavController, loginViewModel: LoginViewModel): Int {
 
-    NavHost(navController = navController as NavHostController, startDestination = Jobs.route){
+    NavHost(navController = navController as NavHostController, startDestination = Login.route){
 
-        //composable(BottomNavigationBar.route){ MainScreen(navController) }
+        composable(Login.route){ LoginScreen(loginViewModel = loginViewModel, navController = navController) }
         composable(Settings.route){ SettingsScreen(navController) }
         composable(Jobs.route){ JobsScreen(navController) }
         composable(Options.route){ OptionsScreen(navController) }

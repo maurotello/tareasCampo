@@ -16,6 +16,7 @@ import com.maurotellodev.tareascampo.login.ui.LoginScreen
 import com.maurotellodev.tareascampo.login.ui.LoginViewModel
 import com.maurotellodev.tareascampo.ui.theme.TareasCampoTheme
 import com.maurotellodev.tareascampo.navigation.ui.BottomNavigationBar
+import com.maurotellodev.tareascampo.navigation.ui.NavigationHost
 import dagger.hilt.android.AndroidEntryPoint
 
 // Con esta anotación preparo la Activity para inyección de dependencias
@@ -33,7 +34,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginScreen(loginViewModel, navController = NavHostController(this))
+                    NavigationHost(navController = rememberNavController(), loginViewModel = loginViewModel)
+                    //LoginScreen(loginViewModel, navController = NavHostController(this))
                     //BottomNavigationBar()
                 }
             }
