@@ -13,8 +13,7 @@ import com.maurotellodev.tareascampo.navigation.ui.Destinations.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
-fun NavigationHost( navController: NavController,
-                    logout: () -> Unit){
+fun NavigationHost( navController: NavController){
 
     NavHost(navController = navController as NavHostController, startDestination = Jobs.route){
 

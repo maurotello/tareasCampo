@@ -38,6 +38,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.maurotellodev.tareascampo.R
 import com.maurotellodev.tareascampo.navigation.ui.BottomNavigationBar
+import com.maurotellodev.tareascampo.navigation.ui.Destinations
 
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel, navController: NavHostController) {
@@ -165,7 +166,9 @@ fun LoginButton(loginEnable: Boolean, loginViewModel: LoginViewModel, navControl
     Button(
         //onClick = { loginViewModel.onLoginSelected() },
         onClick = {
-          navController.navigate("BottomNavigationBar")
+            navController.navigate(Destinations.Jobs.route){
+                launchSingleTop = true
+            }
         },
         enabled = loginEnable,
         modifier = Modifier.fillMaxWidth(),

@@ -44,6 +44,7 @@ class LoginViewModel:ViewModel() {
             //val result = loginUseCase(email.value!!, password.value!!)
            // if (result){
             Log.i("aris", "result OK")
+
             //}
             _isLoading.value = false
         }
