@@ -1,4 +1,4 @@
-package com.maurotellodev.tareascampo.navigation.ui
+package com.maurotellodev.tareascampo.data
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

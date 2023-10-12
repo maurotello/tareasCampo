@@ -1,20 +1,18 @@
-package com.maurotellodev.tareascampo.login.ui
+package com.maurotellodev.tareascampo.login.viewmodel
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.util.Patterns
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.compose.rememberNavController
-import com.maurotellodev.tareascampo.navigation.ui.BottomNavigationBar
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
+@HiltViewModel
 // Con esta anotación preparamos el viewModel para ser inyectado
-class LoginViewModel:ViewModel() {
+class LoginViewModel @Inject constructor()  :ViewModel() {
 
     private val _email = MutableLiveData<String>()
     val email : LiveData<String> = _email
@@ -42,9 +40,8 @@ class LoginViewModel:ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             //val result = loginUseCase(email.value!!, password.value!!)
-           // if (result){
+            // if (result){
             Log.i("aris", "result OK")
-
             //}
             _isLoading.value = false
         }

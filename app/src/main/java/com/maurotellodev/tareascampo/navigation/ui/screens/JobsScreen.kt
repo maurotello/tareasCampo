@@ -1,4 +1,4 @@
-package com.maurotellodev.tareascampo.navigation.ui
+package com.maurotellodev.tareascampo.navigation.ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -16,21 +16,20 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.maurotellodev.tareascampo.R
-
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavController) {
+fun JobsScreen(navController: NavHostController) {
     Scaffold() {
-        MainBodyContent()
+        JobsBodyContent()
     }
 }
 
 @Composable
-fun MainBodyContent(){
+fun JobsBodyContent(){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -38,7 +37,7 @@ fun MainBodyContent(){
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
-            text = "Main",
+            text = "Trabajos",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally),

@@ -35,10 +35,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.maurotellodev.tareascampo.R
-import com.maurotellodev.tareascampo.navigation.ui.BottomNavigationBar
-import com.maurotellodev.tareascampo.navigation.ui.Destinations
+import com.maurotellodev.tareascampo.login.viewmodel.LoginViewModel
+import com.maurotellodev.tareascampo.navigation.Destinations
 
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel, navController: NavHostController) {
@@ -166,13 +165,13 @@ fun LoginButton(loginEnable: Boolean, loginViewModel: LoginViewModel, navControl
     Button(
         //onClick = { loginViewModel.onLoginSelected() },
         onClick = {
-            navController.navigate(Destinations.Jobs.route)
+            navController.navigate(Destinations.BottomNavigationBar.route)
         },
         enabled = loginEnable,
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(0xFF4EA8E9),
-             //disabledBackgroundColor = Color(0xFF78C8F9),
+            //disabledBackgroundColor = Color(0xFF78C8F9),
             contentColor = Color.White,
             disabledContentColor = Color.White
         )
