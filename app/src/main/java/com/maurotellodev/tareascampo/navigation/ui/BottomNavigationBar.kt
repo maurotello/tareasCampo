@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.maurotellodev.tareascampo.login.ui.LoginViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,9 +62,7 @@ fun BottomNavigationBar(navController: NavController) {
             startDestination = Destinations.Jobs.route,
             modifier = Modifier.padding(paddingValues = paddingValues)) {
             composable(Destinations.Jobs.route) {
-                JobsScreen(
-                    navController
-                )
+                JobsScreen(navController = navController)
             }
             composable(Destinations.Options.route) {
                 OptionsScreen(

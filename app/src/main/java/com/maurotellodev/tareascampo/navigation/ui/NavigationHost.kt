@@ -15,7 +15,7 @@ import com.maurotellodev.tareascampo.navigation.ui.Destinations.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
-fun NavigationHost( navController: NavController, loginViewModel: LoginViewModel): Int {
+fun NavigationHost( navController: NavController, loginViewModel: LoginViewModel) {
 
     NavHost(navController = navController as NavHostController, startDestination = Login.route){
 

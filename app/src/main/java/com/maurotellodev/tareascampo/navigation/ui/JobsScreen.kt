@@ -34,7 +34,7 @@ import com.maurotellodev.tareascampo.login.ui.LoginViewModel
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun JobsScreen(navController: NavHostController, loginViewModel: LoginViewModel) {
+fun JobsScreen(navController: NavHostController) {
 
     var navigationSelectedItem by remember {
         mutableStateOf(0)
@@ -62,7 +62,7 @@ fun JobsScreen(navController: NavHostController, loginViewModel: LoginViewModel)
                         },
                         onClick = {
                             navigationSelectedItem = index
-                            
+
                             navController.navigate(navigationItem.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
                                     saveState = true
