@@ -38,6 +38,7 @@ import androidx.navigation.NavHostController
 import com.maurotellodev.tareascampo.R
 import com.maurotellodev.tareascampo.login.viewmodel.LoginViewModel
 import com.maurotellodev.tareascampo.navigation.Destinations
+import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
 
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel, navController: NavHostController) {

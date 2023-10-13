@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.maurotellodev.tareascampo.login.viewmodel.LoginViewModel
 import com.maurotellodev.tareascampo.ui.theme.TareasCampoTheme
 import com.maurotellodev.tareascampo.navigation.NavigationHost
+import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // Con esta anotación preparo la Activity para inyección de dependencias
@@ -21,6 +22,7 @@ class MainActivity : ComponentActivity() {
     // Lo que hacmos con la siguiente linea es inyectar el viewmodel
     // Nos olvidamos de crear instancias a mano
     private val loginViewModel: LoginViewModel by viewModels()
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +32,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavigationHost(navController = rememberNavController(), loginViewModel = loginViewModel)
-                    //BottomNavigationBar()
+                    NavigationHost(
+                        navController = rememberNavController(),
+                        loginViewModel = loginViewModel,
+                        settingsViewModel = settingsViewModel)
                 }
             }
         }
