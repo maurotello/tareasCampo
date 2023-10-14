@@ -4,13 +4,12 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import dagger.Module
-import dagger.Provides
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 
 class UserRepository @Inject constructor(private val dataStore: DataStore<Preferences>) {
+
 
     suspend fun saveUserCredentials(credentials: UserCredentials) {
         val usernameKey = stringPreferencesKey("username")

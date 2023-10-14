@@ -1,9 +1,6 @@
 package com.maurotellodev.tareascampo.navigation.viewmodel
 
 import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maurotellodev.tareascampo.navigation.ui.screens.model.UserCredentials
 import com.maurotellodev.tareascampo.navigation.ui.screens.model.UserRepository
-import dagger.Provides
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(private val userRepository: UserRepository)  :ViewModel() {
 
+
+    private val preferencesKey = stringPreferencesKey("example_preference")
 
     private val _username = MutableLiveData<String>()
     val username : LiveData<String> = _username
