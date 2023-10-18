@@ -1,9 +1,8 @@
 package com.maurotellodev.tareascampo.di
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.core.DataStoreFactory
-import androidx.datastore.preferences.core.Preferences
+import com.maurotellodev.tareascampo.data.DataStoreRepository
+import com.maurotellodev.tareascampo.data.DataStoreRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,32 +11,14 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 
-
-
 @Module
 @InstallIn(SingletonComponent::class)
-object DataStoreModule {
-    @Provides
+object AppModule {
+
     @Singleton
-    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        return DataStoreFactory.create{
-        }
-    }
-}
-
-
-
-/*
-@Module
-@InstallIn(SingletonComponent::class)
-object DataStoreModule {
     @Provides
-    @Singleton
+    fun provideDataStoreRepository(
+        @ApplicationContext app: Context
+    ): DataStoreRepository = DataStoreRepositoryImpl(app)
 
-    fun provideDataStore(context: Context): DataStore<Preferences> {
-        return context.createDataStore(name = "user_preferences")
-
-    }
 }
-
- */
