@@ -3,6 +3,7 @@ package com.maurotellodev.tareascampo.login.ui
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -27,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -37,12 +39,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.maurotellodev.tareascampo.R
 import com.maurotellodev.tareascampo.login.viewmodel.LoginViewModel
-import com.maurotellodev.tareascampo.navigation.Destinations
-import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
 
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel, navController: NavHostController) {
-    //val navController = rememberNavController()
     Box(
         Modifier
             .fillMaxSize()
@@ -88,24 +87,26 @@ fun SignUp() {
 @Composable
 fun Body(modifier: Modifier, loginViewModel: LoginViewModel, navController: NavController) {
     val email:String by loginViewModel.email.observeAsState(initial = "")
+    val emailvalidate:Boolean by loginViewModel.emailvalidate.observeAsState(initial = false)
     val password:String by loginViewModel.password.observeAsState(initial = "")
+    val passwordvalidate:Boolean by loginViewModel.passwordvalidate.observeAsState(initial = false)
     val isLoginEnable:Boolean by loginViewModel.isLoginEnable.observeAsState(initial = false)
 
     Column(modifier = modifier) {
         ImageLogo(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.size(16.dp))
-        Email(email) {
+        Email(emailvalidate, email) {
             loginViewModel.onLoginChanged(email = it, password = password)
         }
         Spacer(modifier = Modifier.size(4.dp))
-        Password(password) {
+        Password(passwordvalidate, password) {
             loginViewModel.onLoginChanged(email = email, password = it)
         }
         Spacer(modifier = Modifier.size(8.dp))
         ForgotPassword(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.size(16.dp))
         //LoginButton(isLoginEnable, loginViewModel)
-        LoginButton(isLoginEnable , loginViewModel, navController)
+        LoginButton(isLoginEnable , loginViewModel, navController, email, password)
         Spacer(modifier = Modifier.size(16.dp))
         LoginDivider()
         Spacer(modifier = Modifier.size(32.dp))
@@ -161,13 +162,10 @@ fun LoginDivider() {
 }
 
 @Composable
-fun LoginButton(loginEnable: Boolean, loginViewModel: LoginViewModel, navController: NavController) {
-    val loged = true;
+fun LoginButton(loginEnable: Boolean, loginViewModel: LoginViewModel, navController: NavController, email: String, password: String) {
     Button(
-        //onClick = { loginViewModel.onLoginSelected() },
-        onClick = {
-            navController.navigate(Destinations.BottomNavigationBar.route)
-        },
+        onClick = { loginViewModel.onLoginSelected(navController, email = email, password = password) },
+        //onClick = { navController.navigate(Destinations.BottomNavigationBar.route)  },
         enabled = loginEnable,
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
@@ -177,7 +175,7 @@ fun LoginButton(loginEnable: Boolean, loginViewModel: LoginViewModel, navControl
             disabledContentColor = Color.White
         )
     ) {
-        Text(text = "Log In")
+        Text(text = stringResource(id = R.string.btn_login))
     }
 }
 
@@ -195,12 +193,14 @@ fun ForgotPassword(modifier: Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Password(password: String, onTextChanged: (String) -> Unit) {
+fun Password(passwordvalidate:Boolean, password: String, onTextChanged: (String) -> Unit) {
     var passwordVisibility by remember { mutableStateOf(false) }
     TextField(
         value = password,
         onValueChange = { onTextChanged(it) },
-        modifier = Modifier.fillMaxWidth(),
+        //modifier = Modifier.fillMaxWidth(),
+        //modifier = Modifier.fillMaxWidth().border(1.dp, if (password == "123") Color.Transparent else Color.Red),
+        modifier = Modifier.fillMaxWidth().border(1.dp, if (passwordvalidate) Color.Transparent else Color.Red),
         placeholder = { Text("Password") },
         colors = TextFieldDefaults.textFieldColors(
             textColor = Color(0xFFB2B2B2),
@@ -210,6 +210,7 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
         ),
         singleLine = true,
         maxLines = 1,
+        //textStyle = TextStyle(color = if (validateCredentials(email, password)) Color.Black else Color.Red)
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         trailingIcon = {
             val imagen = if (passwordVisibility) {
@@ -231,15 +232,15 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Email(email: String, onTextChanged: (String) -> Unit) {
+fun Email(emailvalidate: Boolean, email: String, onTextChanged: (String) -> Unit) {
     TextField(
         value = email,
         onValueChange = { onTextChanged(it) },
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().border(1.dp, if (emailvalidate) Color.Transparent else Color.Red),
         placeholder = { Text(text = "Email") },
         maxLines = 1,
         singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         colors =  TextFieldDefaults.textFieldColors(
             textColor = Color(0xFFB2B2B2),
             containerColor = Color(0xFFFAFAFA),
