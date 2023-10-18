@@ -70,19 +70,19 @@ class SettingsViewModel @Inject constructor(private val repository: DataStoreRep
         username.length > 2 && password.length > 2
 
 
-    fun getUsernameValue(): String{
+    private fun getUsernameValue(): String{
         return _username.value ?: ""
     }
 
-    fun getPasswordValue(): String {
+    private fun getPasswordValue(): String {
         return _password.value ?: ""
     }
 
-    fun getUsername(): String? = runBlocking {
+    private fun getUsername(): String? = runBlocking {
         repository.getString(USERNAME)
     }
 
-    fun getPassword(): String? = runBlocking {
+    private fun getPassword(): String? = runBlocking {
         repository.getString(PASSWORD)
     }
 }

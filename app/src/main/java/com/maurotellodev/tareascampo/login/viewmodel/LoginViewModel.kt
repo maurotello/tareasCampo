@@ -6,14 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.maurotellodev.tareascampo.data.DataStoreRepository
 import com.maurotellodev.tareascampo.navigation.Destinations
+import com.maurotellodev.tareascampo.utils.PASSWORD
+import com.maurotellodev.tareascampo.utils.USERNAME
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
 // Con esta anotación preparamos el viewModel para ser inyectado
-class LoginViewModel @Inject constructor()  :ViewModel() {
+class LoginViewModel @Inject constructor(private val repository: DataStoreRepository)  :ViewModel() {
 
 
     private val _email = MutableLiveData<String>()
@@ -44,11 +48,11 @@ class LoginViewModel @Inject constructor()  :ViewModel() {
     }
 
     private fun emailvalue(email: String):Boolean{
-        return (email == "admin")
+        return (email == "admin" || getUsername() == email)
     }
 
     private fun passwordvalue(password: String):Boolean{
-        return (password == "123")
+        return (password == "123" || getPassword() == password)
     }
 
     fun enableLogin(email: String, password: String):Boolean{
@@ -76,5 +80,13 @@ class LoginViewModel @Inject constructor()  :ViewModel() {
         Log.i("aris", "email = $email")
         Log.i("aris", "password = $password")
         return true
+    }
+
+    private fun getUsername(): String? = runBlocking {
+        repository.getString(USERNAME)
+    }
+
+    private fun getPassword(): String? = runBlocking {
+        repository.getString(PASSWORD)
     }
 }
