@@ -1,5 +1,6 @@
 package com.maurotellodev.tareascampo.login.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,12 +14,11 @@ import com.maurotellodev.tareascampo.utils.USERNAME
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-// Con esta anotación preparamos el viewModel para ser inyectado
-class LoginViewModel @Inject constructor(private val repository: DataStoreRepository)  :ViewModel() {
-
+class LoginViewModel @Inject constructor(private val repository: DataStoreRepository, private val context: Context)  :ViewModel() {
 
     private val _email = MutableLiveData<String>()
     val email : LiveData<String> = _email
@@ -44,7 +44,6 @@ class LoginViewModel @Inject constructor(private val repository: DataStoreReposi
         _emailvalidate.value = emailvalue(email)
         _passwordvalidate.value = passwordvalue(password)
         _isLoginEnable.value = enableLogin(email, password)
-
     }
 
     private fun emailvalue(email: String):Boolean{
@@ -59,21 +58,41 @@ class LoginViewModel @Inject constructor(private val repository: DataStoreReposi
         return true
     }
 
-
     fun onLoginSelected(navController: NavController, email:String, password:String){
         viewModelScope.launch {
             _isLoading.value = true
             Log.i("aris", "result OK")
             if (validateCredentials(email, password)) {
-                navController.navigate(Destinations.BottomNavigationBar.route)
+                if(createGesisFolder()){
+                    Log.i("aris", "Carpeta CREADA")
+                    navController.navigate(Destinations.BottomNavigationBar.route)
+                }else{
+                    Log.i("aris", "ERROR AL CREAR LA CARPETA GESIS")
+                    navController.navigate(Destinations.BottomNavigationBar.route)
+                }
             } else {
                 _emailvalidate.value = email != "admin"
                 _passwordvalidate.value = email != "123"
-
             }
-
         }
+    }
 
+    fun createGesisFolder():Boolean {
+
+        // Obtén la ubicación del directorio de archivos externos de la aplicación.
+        val externalFilesDir = context.getExternalFilesDir(null)
+
+        // Comprueba si el directorio "gesis" ya existe en el directorio de archivos externos.
+        val gesisFolder = File(externalFilesDir, "gesis")
+
+        // Comprueba si el directorio existe. Si no, créalo.
+        if (!gesisFolder.exists()) {
+            // Si no existe, crea la carpeta "gesis".
+            return gesisFolder.mkdirs()
+        } else {
+            return true
+            // La carpeta "gesis" ya existe, puedes manejarlo como desees.
+        }
     }
 
     fun validateCredentials(email: String, password: String): Boolean {
