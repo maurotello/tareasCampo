@@ -14,6 +14,6 @@ object ContextModule {
     @Provides
     @Singleton
     fun provideContext(application: Application): Context {
-        return application
+        return application.applicationContext
     }
 }

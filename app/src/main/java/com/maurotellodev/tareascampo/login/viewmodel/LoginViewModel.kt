@@ -36,7 +36,7 @@ class LoginViewModel @Inject constructor(private val repository: DataStoreReposi
     val isLoginEnable:LiveData<Boolean> = _isLoginEnable
 
     private val _isLoading = MutableLiveData<Boolean>()
-    var isLoading:LiveData<Boolean> = _isLoading
+    //var isLoading:LiveData<Boolean> = _isLoading
 
     fun onLoginChanged(email:String, password:String) {
         _email.value = email
@@ -63,11 +63,10 @@ class LoginViewModel @Inject constructor(private val repository: DataStoreReposi
             _isLoading.value = true
             Log.i("aris", "result OK")
             if (validateCredentials(email, password)) {
+                // Creo que esto está de más en esta versión porque voy a recibir un json y seguramente lo guarde en room
                 if(createGesisFolder()){
-                    Log.i("aris", "Carpeta CREADA")
                     navController.navigate(Destinations.BottomNavigationBar.route)
                 }else{
-                    Log.i("aris", "ERROR AL CREAR LA CARPETA GESIS")
                     navController.navigate(Destinations.BottomNavigationBar.route)
                 }
             } else {
@@ -78,8 +77,7 @@ class LoginViewModel @Inject constructor(private val repository: DataStoreReposi
     }
 
     fun createGesisFolder():Boolean {
-
-        // Obtén la ubicación del directorio de archivos externos de la aplicación.
+        /* Obtén la ubicación del directorio de archivos externos de la aplicación. */
         val externalFilesDir = context.getExternalFilesDir(null)
 
         // Comprueba si el directorio "gesis" ya existe en el directorio de archivos externos.
@@ -88,9 +86,13 @@ class LoginViewModel @Inject constructor(private val repository: DataStoreReposi
         // Comprueba si el directorio existe. Si no, créalo.
         if (!gesisFolder.exists()) {
             // Si no existe, crea la carpeta "gesis".
+            Log.i("aris", "Gesis Folder CREATED")
             return gesisFolder.mkdirs()
+
         } else {
+            Log.i("aris", "Gesis Folder EXISTED")
             return true
+
             // La carpeta "gesis" ya existe, puedes manejarlo como desees.
         }
     }
