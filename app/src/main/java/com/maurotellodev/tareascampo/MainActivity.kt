@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.maurotellodev.tareascampo.login.viewmodel.LoginViewModel
-import com.maurotellodev.tareascampo.ui.theme.TareasCampoTheme
 import com.maurotellodev.tareascampo.navigation.NavigationHost
 import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
+import com.maurotellodev.tareascampo.ui.theme.TareasCampoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 // Con esta anotación preparo la Activity para inyección de dependencias
@@ -32,6 +32,28 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
+                    /*
+                    var show by remember { mutableStateOf(false) }
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+
+                        Button(onClick = { show = true }) {
+                            Text(text = "Mostrar Dialogo")
+                        }*/
+
+                        /*
+                        MyAlertDialog(
+                            show = show,
+                            onDismiss = { show = false },
+                            onConfirm = {
+                                Log.i("aris", "Presione en confirmar")
+                            }
+                        )*/
+
+
                     NavigationHost(
                         navController = rememberNavController(),
                         loginViewModel = loginViewModel,
@@ -44,7 +66,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun HelloApp(){
+fun HelloApp() {
     TareasCampoTheme {
         // A surface container using the 'background' color from the theme
         Surface(

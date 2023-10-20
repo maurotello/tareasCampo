@@ -1,12 +1,14 @@
 package com.maurotellodev.tareascampo.navigation.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maurotellodev.tareascampo.data.DataStoreRepository
-import com.maurotellodev.tareascampo.navigation.ui.screens.model.UserCredentials
 import com.maurotellodev.tareascampo.utils.PASSWORD
 import com.maurotellodev.tareascampo.utils.USERNAME
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +32,11 @@ class SettingsViewModel @Inject constructor(private val repository: DataStoreRep
     private val _isLoginEnable = MutableLiveData<Boolean>()
     val isLoginEnable:LiveData<Boolean> = _isLoginEnable
 
+    private val _preferencesSaved = MutableLiveData<Boolean>()
+    var preferencesSaved:LiveData<Boolean> = _preferencesSaved
+
+    var isDataSaved by mutableStateOf(false)
+
 
     fun onLoginChanged(username:String, password:String){
         _username.value = username
@@ -39,31 +46,38 @@ class SettingsViewModel @Inject constructor(private val repository: DataStoreRep
 
 
     fun onLoginSelected(){
-        viewModelScope.launch {
 
-            //val result = loginUseCase(email.value!!, password.value!!)
-            // if (result){
-            Log.i("aris", "USERNAME: ")
+        viewModelScope.launch {
             val username = getUsernameValue()
             val password = getPasswordValue()
-            saveUserData(username, password)
+            val saved = saveUserData(username, password)
+            if(saved){
+                _preferencesSaved.value = true
+                isDataSaved = true;
+            }
+
             Log.i("aris", "USERNAME: $username")
             Log.i("aris", "PASSWORD: $password")
             Log.i("aris", "DATOS GUARDADOS EN DATASTORE")
             val savedUsername = getUsername();
-            Log.i("aris", "Username: $savedUsername")
             val savedPassword = getPassword();
-            Log.i("aris", "Username: $savedPassword")
+            Log.i("aris", "Password Saved: $savedPassword")
+            Log.i("aris", "Username Saved: $savedUsername")
+            Log.i("aris", "PreferencesSaved: ${preferencesSaved.value}")
 
             //}
         }
     }
 
 
-    suspend fun saveUserData(username: String, password: String) {
-        val userCredentials = UserCredentials(username, password)
-        repository.putString(USERNAME,username)
-        repository.putString(PASSWORD,password)
+    private suspend fun saveUserData(username: String, password: String):Boolean {
+        return try {
+            repository.putString(USERNAME,username)
+            repository.putString(PASSWORD,password)
+            true
+        }catch (e: Exception){
+            false
+        }
     }
 
     fun enableLogin(username: String, password: String) =

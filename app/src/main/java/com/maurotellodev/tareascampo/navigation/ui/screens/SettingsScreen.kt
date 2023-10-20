@@ -1,6 +1,7 @@
 package com.maurotellodev.tareascampo.navigation.ui.screens
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -35,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.maurotellodev.tareascampo.MyDataSavedDialog
 import com.maurotellodev.tareascampo.R
-
 import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
 
 @Composable
@@ -47,6 +49,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel, navController: NavHostC
             .fillMaxSize()
             .padding(8.dp)
     ) {
+
         Header(Modifier.align(Alignment.TopEnd))
         Body(Modifier.align(Alignment.Center), settingsViewModel, navController)
         Footer(Modifier.align(Alignment.BottomCenter))
@@ -73,6 +76,23 @@ fun Body(modifier: Modifier, settingsViewModel: SettingsViewModel, navController
     val username:String by settingsViewModel.username.observeAsState(initial = "")
     val password:String by settingsViewModel.password.observeAsState(initial = "")
     val isLoginEnable:Boolean by settingsViewModel.isLoginEnable.observeAsState(initial = false)
+    val preferencesSaved by settingsViewModel.preferencesSaved.observeAsState(false)
+
+    var show by remember { mutableStateOf(false) }
+    Log.i("aris", "Preferences en Screen: $preferencesSaved")
+
+    if(settingsViewModel.isDataSaved){
+        MyDataSavedDialog(
+            show = preferencesSaved,
+            dialogTitle = "GESIS",
+            dialogText = "Datos guardados satisfactoriamente",
+            onDismiss = {
+                settingsViewModel.isDataSaved = false
+                Log.i("aris", "Presione en confirmar")
+            },
+            onConfirm = { }
+        )
+    }
 
 
     Column(modifier = modifier) {
@@ -87,11 +107,9 @@ fun Body(modifier: Modifier, settingsViewModel: SettingsViewModel, navController
         }
         Spacer(modifier = Modifier.size(8.dp))
         Spacer(modifier = Modifier.size(16.dp))
-        //LoginButton(isLoginEnable, loginViewModel)
         LoginButton(
             isLoginEnable,
-            settingsViewModel,
-            navController
+            settingsViewModel
         )
         Spacer(modifier = Modifier.size(16.dp))
         LoginDivider()
@@ -124,8 +142,7 @@ fun LoginDivider() {
 }
 
 @Composable
-fun LoginButton(loginEnable: Boolean, settingsViewModel: SettingsViewModel, navController: NavController) {
-    val loged = true;
+fun LoginButton(loginEnable: Boolean, settingsViewModel: SettingsViewModel) {
     Button(
 
         onClick = {
@@ -140,7 +157,7 @@ fun LoginButton(loginEnable: Boolean, settingsViewModel: SettingsViewModel, navC
             disabledContentColor = Color.White
         )
     ) {
-        Text(text = "Log In")
+        Text(text = stringResource(id = R.string.btn_save_user))
     }
 }
 
@@ -206,7 +223,7 @@ fun ImageLogo(modifier: Modifier) {
     Image(
         painter = painterResource(id = R.drawable.aris),
         contentDescription = "logo",
-        modifier = modifier
+        modifier = modifier.width(120.dp)
     )
 }
 
@@ -215,6 +232,6 @@ fun Header(modifier: Modifier) {
     val activity = LocalContext.current as Activity
     Icon(
         imageVector = Icons.Default.Close,
-        contentDescription = "close app",
+        contentDescription = "Cerrar APP",
         modifier = modifier.clickable { activity.finish() })
 }
