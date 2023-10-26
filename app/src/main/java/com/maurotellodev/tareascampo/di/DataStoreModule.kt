@@ -1,8 +1,8 @@
 package com.maurotellodev.tareascampo.di
 
 import android.content.Context
-import com.maurotellodev.tareascampo.data.DataStoreRepository
-import com.maurotellodev.tareascampo.data.DataStoreRepositoryImpl
+import com.maurotellodev.tareascampo.data.interfaces.DataStoreRepository
+import com.maurotellodev.tareascampo.data.interfaces.DataStoreRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

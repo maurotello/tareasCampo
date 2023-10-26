@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.maurotellodev.tareascampo.login.viewmodel.LoginViewModel
 import com.maurotellodev.tareascampo.navigation.NavigationHost
+import com.maurotellodev.tareascampo.navigation.viewmodel.OptionsViewModel
 import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
 import com.maurotellodev.tareascampo.ui.theme.TareasCampoTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
     // Nos olvidamos de crear instancias a mano
     private val loginViewModel: LoginViewModel by viewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
+    private val optionsViewModel: OptionsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +59,8 @@ class MainActivity : ComponentActivity() {
                     NavigationHost(
                         navController = rememberNavController(),
                         loginViewModel = loginViewModel,
-                        settingsViewModel = settingsViewModel)
+                        settingsViewModel = settingsViewModel,
+                        optionsViewModel = optionsViewModel)
                 }
             }
         }

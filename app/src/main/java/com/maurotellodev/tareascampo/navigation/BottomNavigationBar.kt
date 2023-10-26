@@ -5,22 +5,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.maurotellodev.tareascampo.navigation.ui.screens.JobsScreen
 import com.maurotellodev.tareascampo.navigation.ui.screens.OptionsScreen
 import com.maurotellodev.tareascampo.navigation.ui.screens.SettingsScreen
+import com.maurotellodev.tareascampo.navigation.viewmodel.OptionsViewModel
 import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar(settingsViewModel: SettingsViewModel, navController: NavHostController) {
+fun BottomNavigationBar(optionsViewModel: OptionsViewModel, settingsViewModel: SettingsViewModel, navController: NavController) {
+    // el navController no se usa pero es necesario para el NavigationHost
     var navigationSelectedItem by remember {
-        mutableStateOf(0)
+        mutableIntStateOf(0)
     }
 
     val navController = rememberNavController()
@@ -66,6 +68,7 @@ fun BottomNavigationBar(settingsViewModel: SettingsViewModel, navController: Nav
             }
             composable(Destinations.Options.route) {
                 OptionsScreen(
+                    optionsViewModel,
                     navController
                 )
             }

@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.maurotellodev.tareascampo.data.DataStoreRepository
+import com.maurotellodev.tareascampo.data.interfaces.DataStoreRepository
 import com.maurotellodev.tareascampo.utils.PASSWORD
 import com.maurotellodev.tareascampo.utils.USERNAME
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,14 +53,14 @@ class SettingsViewModel @Inject constructor(private val repository: DataStoreRep
             val saved = saveUserData(username, password)
             if(saved){
                 _preferencesSaved.value = true
-                isDataSaved = true;
+                isDataSaved = true
             }
 
             Log.i("aris", "USERNAME: $username")
             Log.i("aris", "PASSWORD: $password")
             Log.i("aris", "DATOS GUARDADOS EN DATASTORE")
-            val savedUsername = getUsername();
-            val savedPassword = getPassword();
+            val savedUsername = getUsername()
+            val savedPassword = getPassword()
             Log.i("aris", "Password Saved: $savedPassword")
             Log.i("aris", "Username Saved: $savedUsername")
             Log.i("aris", "PreferencesSaved: ${preferencesSaved.value}")
@@ -80,7 +80,7 @@ class SettingsViewModel @Inject constructor(private val repository: DataStoreRep
         }
     }
 
-    fun enableLogin(username: String, password: String) =
+    private fun enableLogin(username: String, password: String) =
         username.length > 2 && password.length > 2
 
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.maurotellodev.tareascampo.data.DataStoreRepository
+import com.maurotellodev.tareascampo.data.interfaces.DataStoreRepository
 import com.maurotellodev.tareascampo.navigation.Destinations
 import com.maurotellodev.tareascampo.utils.PASSWORD
 import com.maurotellodev.tareascampo.utils.USERNAME
