@@ -57,31 +57,25 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel, navController: NavHostC
 }
 
 @Composable
-fun Footer(modifier: Modifier) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        Divider(
-            Modifier
-                .background(Color(0xFFF9F9F9))
-                .height(1.dp)
-                .fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.size(24.dp))
-        Spacer(modifier = Modifier.size(24.dp))
-    }
-}
-
-
-@Composable
 fun Body(modifier: Modifier, settingsViewModel: SettingsViewModel, navController: NavController) {
-    val username:String by settingsViewModel.username.observeAsState(initial = "")
-    val password:String by settingsViewModel.password.observeAsState(initial = "")
-    val isLoginEnable:Boolean by settingsViewModel.isLoginEnable.observeAsState(initial = false)
+    val username: String by settingsViewModel.username.observeAsState(initial = "")
+    val password: String by settingsViewModel.password.observeAsState(initial = "")
+
+    val serverUrl: String by settingsViewModel.serverUrl.observeAsState(initial = "")
+    val serverPort: String by settingsViewModel.serverPort.observeAsState(initial = "")
+    val serverUsername: String by settingsViewModel.serverUsername.observeAsState(initial = "")
+    val serverPassword: String by settingsViewModel.serverPassword.observeAsState(initial = "")
+
+    val isLoginEnable: Boolean by settingsViewModel.isLoginEnable.observeAsState(initial = false)
+    val isServerEnable: Boolean by settingsViewModel.isServerEnable.observeAsState(initial = false)
+
     val preferencesSaved by settingsViewModel.preferencesSaved.observeAsState(false)
+
 
     var show by remember { mutableStateOf(false) }
     Log.i("aris", "Preferences en Screen: $preferencesSaved")
 
-    if(settingsViewModel.isDataSaved){
+    if (settingsViewModel.isDataSaved) {
         MyDataSavedDialog(
             show = preferencesSaved,
             dialogTitle = "GESIS",
@@ -93,7 +87,6 @@ fun Body(modifier: Modifier, settingsViewModel: SettingsViewModel, navController
             onConfirm = { }
         )
     }
-
 
     Column(modifier = modifier) {
         ImageLogo(Modifier.align(Alignment.CenterHorizontally))
@@ -114,8 +107,56 @@ fun Body(modifier: Modifier, settingsViewModel: SettingsViewModel, navController
         Spacer(modifier = Modifier.size(16.dp))
         LoginDivider()
         Spacer(modifier = Modifier.size(32.dp))
+
+        ServerUrl(serverUrl) {
+            settingsViewModel.onServerChanged(
+                serverUrl = it,
+                serverPort = serverPort,
+                serverUsername = serverUsername,
+                serverPassword = serverPassword
+            )
+        }
+        ServerPort(serverPort) {
+            settingsViewModel.onServerChanged(
+                serverUrl = serverUrl,
+                serverPort = it,
+                serverUsername = serverUsername,
+                serverPassword = serverPassword
+            )
+        }
+        ServerUsername(serverUsername) {
+            settingsViewModel.onServerChanged(
+                serverUrl = serverUrl,
+                serverPort = serverPort,
+                serverUsername = it,
+                serverPassword = serverPassword
+            )
+        }
+        ServerPassword(serverPassword) {
+            settingsViewModel.onServerChanged(
+                serverUrl = serverUrl,
+                serverPort = serverPort,
+                serverUsername = serverUsername,
+                serverPassword = it
+            )
+        }
+        ServerButton(
+            isServerEnable,
+            settingsViewModel
+        )
     }
 }
+
+
+@Composable
+fun Header(modifier: Modifier) {
+    val activity = LocalContext.current as Activity
+    Icon(
+        imageVector = Icons.Default.Close,
+        contentDescription = "Cerrar APP",
+        modifier = modifier.clickable { activity.finish() })
+}
+
 @Composable
 fun LoginDivider() {
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -142,25 +183,33 @@ fun LoginDivider() {
 }
 
 @Composable
-fun LoginButton(loginEnable: Boolean, settingsViewModel: SettingsViewModel) {
-    Button(
-
-        onClick = {
-           settingsViewModel.onLoginSelected()
-        },
-        enabled = loginEnable,
-        modifier = Modifier.fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFF4EA8E9),
-            //disabledBackgroundColor = Color(0xFF78C8F9),
-            contentColor = Color.White,
-            disabledContentColor = Color.White
-        )
-    ) {
-        Text(text = stringResource(id = R.string.btn_save_user))
-    }
+fun ImageLogo(modifier: Modifier) {
+    Image(
+        painter = painterResource(id = R.drawable.aris),
+        contentDescription = "logo",
+        modifier = modifier.width(120.dp)
+    )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Name(email: String, onTextChanged: (String) -> Unit) {
+    TextField(
+        value = email,
+        onValueChange = { onTextChanged(it) },
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(text = "Email") },
+        maxLines = 1,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color(0xFFB2B2B2),
+            containerColor = Color(0xFFFAFAFA),
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        )
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -198,18 +247,39 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
     )
 }
 
+@Composable
+fun LoginButton(loginEnable: Boolean, settingsViewModel: SettingsViewModel) {
+    Button(
+
+        onClick = {
+            settingsViewModel.onLoginSelected()
+        },
+        enabled = loginEnable,
+        modifier = Modifier.fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFF4EA8E9),
+            //disabledBackgroundColor = Color(0xFF78C8F9),
+            contentColor = Color.White,
+            disabledContentColor = Color.White
+        )
+    ) {
+        Text(text = stringResource(id = R.string.btn_save_user))
+    }
+}
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Name(email: String, onTextChanged: (String) -> Unit) {
+fun ServerUrl(serverUrl: String, onTextChanged: (String) -> Unit) {
     TextField(
-        value = email,
+        value = serverUrl,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(text = "Email") },
+        placeholder = { Text(text = "Server URL") },
         maxLines = 1,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-        colors =  TextFieldDefaults.textFieldColors(
+        colors = TextFieldDefaults.textFieldColors(
             textColor = Color(0xFFB2B2B2),
             containerColor = Color(0xFFFAFAFA),
             focusedIndicatorColor = Color.Transparent,
@@ -218,20 +288,112 @@ fun Name(email: String, onTextChanged: (String) -> Unit) {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ImageLogo(modifier: Modifier) {
-    Image(
-        painter = painterResource(id = R.drawable.aris),
-        contentDescription = "logo",
-        modifier = modifier.width(120.dp)
+fun ServerPort(serverPort: String, onTextChanged: (String) -> Unit) {
+    TextField(
+        value = serverPort,
+        onValueChange = { onTextChanged(it) },
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(text = "Server PORT") },
+        maxLines = 1,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color(0xFFB2B2B2),
+            containerColor = Color(0xFFFAFAFA),
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ServerUsername(serverUsername: String, onTextChanged: (String) -> Unit) {
+    TextField(
+        value = serverUsername,
+        onValueChange = { onTextChanged(it) },
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(text = "Server Username") },
+        maxLines = 1,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color(0xFFB2B2B2),
+            containerColor = Color(0xFFFAFAFA),
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ServerPassword(serverPassword: String, onTextChanged: (String) -> Unit) {
+    var passwordVisibility by remember { mutableStateOf(false) }
+    TextField(
+        value = serverPassword,
+        onValueChange = { onTextChanged(it) },
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text("Server Password") },
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color(0xFFB2B2B2),
+            containerColor = Color(0xFFFAFAFA),
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        ),
+        singleLine = true,
+        maxLines = 1,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        trailingIcon = {
+            val imagen = if (passwordVisibility) {
+                Icons.Filled.VisibilityOff
+            } else {
+                Icons.Filled.Visibility
+            }
+            IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                Icon(imageVector = imagen, contentDescription = "show password")
+            }
+        },
+        visualTransformation = if (passwordVisibility) {
+            VisualTransformation.None
+        } else {
+            PasswordVisualTransformation()
+        }
     )
 }
 
 @Composable
-fun Header(modifier: Modifier) {
-    val activity = LocalContext.current as Activity
-    Icon(
-        imageVector = Icons.Default.Close,
-        contentDescription = "Cerrar APP",
-        modifier = modifier.clickable { activity.finish() })
+fun ServerButton(serverEnable: Boolean, settingsViewModel: SettingsViewModel) {
+    Button(
+        onClick = {
+            settingsViewModel.onServerSelected()
+        },
+        enabled = serverEnable,
+        modifier = Modifier.fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFF4EA8E9),
+            //disabledBackgroundColor = Color(0xFF78C8F9),
+            contentColor = Color.White,
+            disabledContentColor = Color.White
+        )
+    ) {
+        Text(text = stringResource(id = R.string.btn_save_user))
+    }
+}
+
+
+@Composable
+fun Footer(modifier: Modifier) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        Divider(
+            Modifier
+                .background(Color(0xFFF9F9F9))
+                .height(1.dp)
+                .fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.size(24.dp))
+        Spacer(modifier = Modifier.size(24.dp))
+    }
 }
