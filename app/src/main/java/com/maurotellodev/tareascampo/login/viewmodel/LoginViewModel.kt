@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.maurotellodev.tareascampo.data.databases.DatabaseHelper
 import com.maurotellodev.tareascampo.data.interfaces.DataStoreRepository
 import com.maurotellodev.tareascampo.navigation.Destinations
 import com.maurotellodev.tareascampo.utils.PASSWORD
@@ -18,7 +19,7 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val repository: DataStoreRepository, private val context: Context)  :ViewModel() {
+class LoginViewModel @Inject constructor(private val repository: DataStoreRepository, private val context: Context, private val databaseHelper: DatabaseHelper)  :ViewModel() {
 
     private val _email = MutableLiveData<String>()
     val email : LiveData<String> = _email
@@ -63,6 +64,7 @@ class LoginViewModel @Inject constructor(private val repository: DataStoreReposi
             _isLoading.value = true
             Log.i("aris", "result OK")
             if (validateCredentials(email, password)) {
+                initializeDatabase()
                 // Creo que esto está de más en esta versión porque voy a recibir un json y seguramente lo guarde en room
                 if(createGesisFolder()){
                     navController.navigate(Destinations.BottomNavigationBar.route)
@@ -74,6 +76,13 @@ class LoginViewModel @Inject constructor(private val repository: DataStoreReposi
                 _passwordvalidate.value = email != "123"
             }
         }
+    }
+
+    private fun initializeDatabase() {
+        val dbHelper = DatabaseHelper(context)
+        val database = dbHelper.writableDatabase
+        // Aquí puedes realizar operaciones de inicialización de la base de datos
+        databaseHelper.insertData(database, _email.value.toString())
     }
 
     fun createGesisFolder():Boolean {

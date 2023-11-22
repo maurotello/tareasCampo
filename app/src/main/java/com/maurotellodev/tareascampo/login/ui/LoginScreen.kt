@@ -264,6 +264,6 @@ fun Header(modifier: Modifier) {
     val activity = LocalContext.current as Activity
     Icon(
         imageVector = Icons.Default.Close,
-        contentDescription = "close app",
+        contentDescription = "Cerrar APP",
         modifier = modifier.clickable { activity.finish() })
 }

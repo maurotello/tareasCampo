@@ -9,6 +9,7 @@ import com.maurotellodev.tareascampo.login.ui.LoginScreen
 import com.maurotellodev.tareascampo.login.viewmodel.LoginViewModel
 import com.maurotellodev.tareascampo.navigation.Destinations.BottomNavigationBar
 import com.maurotellodev.tareascampo.navigation.Destinations.Login
+import com.maurotellodev.tareascampo.navigation.viewmodel.JobsViewModel
 import com.maurotellodev.tareascampo.navigation.viewmodel.OptionsViewModel
 import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
 
@@ -17,12 +18,13 @@ import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
 fun NavigationHost( navController: NavController,
                     loginViewModel: LoginViewModel,
                     settingsViewModel: SettingsViewModel,
-                    optionsViewModel: OptionsViewModel
+                    optionsViewModel: OptionsViewModel,
+                    jobsViewModel: JobsViewModel
 ){
 
     NavHost(navController = navController as NavHostController, startDestination = Login.route){
 
-        composable(BottomNavigationBar.route){ BottomNavigationBar(optionsViewModel, settingsViewModel, navController = navController) }
+        composable(BottomNavigationBar.route){ BottomNavigationBar(jobsViewModel, optionsViewModel, settingsViewModel, navController = navController) }
         composable(Login.route){ LoginScreen(loginViewModel = loginViewModel, navController = navController)}
     }
 }

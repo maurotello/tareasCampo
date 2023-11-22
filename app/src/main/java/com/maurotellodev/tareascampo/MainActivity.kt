@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.maurotellodev.tareascampo.login.viewmodel.LoginViewModel
 import com.maurotellodev.tareascampo.navigation.NavigationHost
+import com.maurotellodev.tareascampo.navigation.viewmodel.JobsViewModel
 import com.maurotellodev.tareascampo.navigation.viewmodel.OptionsViewModel
 import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
 import com.maurotellodev.tareascampo.ui.theme.TareasCampoTheme
@@ -25,6 +26,7 @@ class MainActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
     private val optionsViewModel: OptionsViewModel by viewModels()
+    private val jobsViewModel: JobsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +62,8 @@ class MainActivity : ComponentActivity() {
                         navController = rememberNavController(),
                         loginViewModel = loginViewModel,
                         settingsViewModel = settingsViewModel,
-                        optionsViewModel = optionsViewModel)
+                        optionsViewModel = optionsViewModel,
+                        jobsViewModel = jobsViewModel)
                 }
             }
         }

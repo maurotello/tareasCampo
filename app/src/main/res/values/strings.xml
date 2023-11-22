@@ -5,5 +5,10 @@
     <string name="account">Account</string>
     <string name="settings">Settings</string>
     <string name="btn_login">Ingresar</string>
+    <string name="btn_download_file">Subir Archivo</string>
+    <string name="btn_cargar_datos">Procesar Archivo</string>
     <string name="btn_save_user">Guardar datos</string>
+    <string name="txt_settings_username_placeholder">Usuario</string>
+    <string name="txt_settings_password_placeholder">Password</string>
+
 </resources>

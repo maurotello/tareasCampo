@@ -126,8 +126,10 @@ class SettingsViewModel @Inject constructor(private val repository: DataStoreRep
         }
     }
 
-    private suspend fun saveServerData(serverUrl: String, serverPort: String, serverUsername: String, serverPassword: String):Boolean {
+    private suspend fun saveServerData(serverUrl: String = "89.117.7.119", serverPort: String = "21", serverUsername: String = "u828369731.maurotellodev.com", serverPassword: String = "desaTELLO2014"):Boolean {
         return try {
+            //Datos para probar
+
             repository.putString(SERVER_URL,serverUrl)
             repository.putString(SERVER_PORT, serverPort)
             repository.putString(SERVER_USERNAME, serverUsername)
@@ -203,7 +205,4 @@ class SettingsViewModel @Inject constructor(private val repository: DataStoreRep
     private fun getServerPasswordValue(): String {
         return _serverPassword.value ?: ""
     }
-
-
-
 }

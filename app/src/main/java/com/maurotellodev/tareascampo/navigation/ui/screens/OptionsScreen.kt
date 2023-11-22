@@ -39,12 +39,12 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterial3Api
 @Composable
 fun OptionsScreen(optionsViewModel: OptionsViewModel, navController: NavHostController) {
+
     Box(
         Modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
-
         HeaderOptions(Modifier.align(Alignment.TopEnd))
         Body(Modifier.align(Alignment.Center), optionsViewModel, navController)
         FooterOptions(Modifier.align(Alignment.BottomCenter))
@@ -75,10 +75,12 @@ fun Body(modifier: Modifier, optionsViewModel: OptionsViewModel, navController: 
         Spacer(modifier = Modifier.size(16.dp))
         OptionsButton(optionsViewModel)
         Spacer(modifier = Modifier.size(16.dp))
+        BtnProcessJson(optionsViewModel)
         LoginDivider()
         Spacer(modifier = Modifier.size(32.dp))
     }
 }
+
 @Composable
 fun OptionsButton(optionsViewModel: OptionsViewModel) {
     val scope = rememberCoroutineScope()
@@ -97,7 +99,29 @@ fun OptionsButton(optionsViewModel: OptionsViewModel) {
             disabledContentColor = Color.White
         )
     ) {
-        Text(text = stringResource(id = R.string.btn_save_user))
+        Text(text = stringResource(id = R.string.btn_download_file))
+    }
+}
+
+@Composable
+fun BtnProcessJson(optionsViewModel: OptionsViewModel) {
+    val scope = rememberCoroutineScope()
+    Button(
+        onClick = {
+            scope.launch {
+                optionsViewModel.processFileJson()
+            }
+
+        },
+        modifier = Modifier.fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFF4EA8E9),
+            //disabledBackgroundColor = Color(0xFF78C8F9),
+            contentColor = Color.White,
+            disabledContentColor = Color.White
+        )
+    ) {
+        Text(text = stringResource(id = R.string.btn_cargar_datos))
     }
 }
 

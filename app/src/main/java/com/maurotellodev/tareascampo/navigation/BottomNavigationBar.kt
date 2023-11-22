@@ -13,13 +13,14 @@ import androidx.navigation.compose.rememberNavController
 import com.maurotellodev.tareascampo.navigation.ui.screens.JobsScreen
 import com.maurotellodev.tareascampo.navigation.ui.screens.OptionsScreen
 import com.maurotellodev.tareascampo.navigation.ui.screens.SettingsScreen
+import com.maurotellodev.tareascampo.navigation.viewmodel.JobsViewModel
 import com.maurotellodev.tareascampo.navigation.viewmodel.OptionsViewModel
 import com.maurotellodev.tareascampo.navigation.viewmodel.SettingsViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar(optionsViewModel: OptionsViewModel, settingsViewModel: SettingsViewModel, navController: NavController) {
+fun BottomNavigationBar(jobsViewModel: JobsViewModel, optionsViewModel: OptionsViewModel, settingsViewModel: SettingsViewModel, navController: NavController) {
     // el navController no se usa pero es necesario para el NavigationHost
     var navigationSelectedItem by remember {
         mutableIntStateOf(0)
@@ -63,6 +64,7 @@ fun BottomNavigationBar(optionsViewModel: OptionsViewModel, settingsViewModel: S
             modifier = Modifier.padding(paddingValues = paddingValues)) {
             composable(Destinations.Jobs.route) {
                 JobsScreen(
+                    jobsViewModel,
                     navController
                 )
             }

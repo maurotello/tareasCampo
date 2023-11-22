@@ -194,11 +194,16 @@ fun ImageLogo(modifier: Modifier) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Name(email: String, onTextChanged: (String) -> Unit) {
+    val context = LocalContext.current
     TextField(
         value = email,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(text = "Email") },
+        placeholder = {
+            Text(
+                text = context.getString(R.string.txt_settings_username_placeholder)
+            )
+        },
         maxLines = 1,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -214,12 +219,17 @@ fun Name(email: String, onTextChanged: (String) -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Password(password: String, onTextChanged: (String) -> Unit) {
+    val context = LocalContext.current
     var passwordVisibility by remember { mutableStateOf(false) }
     TextField(
         value = password,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text("Password") },
+        placeholder = {
+            Text(
+                text = context.getString(R.string.txt_settings_username_placeholder)
+            )
+        },
         colors = TextFieldDefaults.textFieldColors(
             textColor = Color(0xFFB2B2B2),
             containerColor = Color(0xFFFAFAFA),
