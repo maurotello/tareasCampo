@@ -157,11 +157,17 @@ class OptionsViewModel @Inject constructor(
     }
 
     private fun processJson(file: File): Boolean {
+        val dbHelper = DatabaseHelper(context)
+        val database = dbHelper.writableDatabase
         if (file.name == "nuevo-relevamiento.json") {
             val content = file.readText()
             val contentJson = JSONObject(content)
             // Obtén el valor de "table"
             val tableValue = contentJson.getString("table")
+
+            databaseHelper.table(database)
+            databaseHelper.populateTable(database, tableValue)
+
             // Obtén el valor de "columns"
             val columnsValue = contentJson.getJSONArray("columns")
 

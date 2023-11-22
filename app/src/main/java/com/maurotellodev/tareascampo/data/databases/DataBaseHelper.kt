@@ -78,6 +78,21 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, "Gesis.db", n
         database.execSQL(sql)
     }
 
+    fun table(database: SQLiteDatabase){
+        val createTableQuery = "CREATE TABLE IF NOT EXISTS tables (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "name VARCHAR(100)" +
+                ")"
+        database.execSQL(createTableQuery)
+    }
+
+    fun populateTable(database: SQLiteDatabase, table: String){
+        val contentValues = ContentValues()
+        contentValues.put("name", table)
+        database.insert("tables", null, contentValues)
+        database.close()
+    }
+
     private fun createLoginTable(database: SQLiteDatabase) {
         val createTableQuery = "CREATE TABLE IF NOT EXISTS login (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
